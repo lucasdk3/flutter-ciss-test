@@ -1,0 +1,107 @@
+version: "3"
+
+vars:
+  DOCKER_IMAGE_BUILDER: builder
+dotenv: [".env"]
+
+tasks:
+  default:
+    cmds:
+      - task --help
+      - task --list
+
+  compose:up:
+    desc: "Cria as imagens do flutter e do sonar"
+    cmds:
+      - docker compose up -d
+
+  install:dependencies:
+    desc: "Intala as dependências da aplicação"
+    cmds:
+      - >
+        docker-compose run \
+          {{.DOCKER_IMAGE_BUILDER}} sh -c "\
+          git config --global --add safe.directory /home/flutter && \
+          flutter pub get"
+
+  review:lint:
+    desc: "Executa as rotinas de lint da aplicação"
+    cmds:
+      - >
+        docker-compose run \
+          {{.DOCKER_IMAGE_BUILDER}} sh -c "\
+          git config --global --add safe.directory /home/flutter && \
+          flutter analyze --no-fatal-infos"
+
+  review:test:
+    desc: "Executa as rotinas de test da aplicação"
+    cmds:
+      - >
+        docker-compose run \
+          {{.DOCKER_IMAGE_BUILDER}} sh -c "\   
+            git config --global --add safe.directory /home/flutter && \
+            mkdir -p .reports && \
+            flutter test --machine | tojunit --output .reports/test-report.xml && \
+            flutter test --coverage && \
+            genhtml -o coverage coverage/lcov.info && \
+            junit2html .reports/test-report.xml .reports/test-report.html && \
+            wget -qO- https://raw.githubusercontent.com/eriwen/lcov-to-cobertura-xml/master/lcov_cobertura/lcov_cobertura.py | python3 - coverage/lcov.info -o coverage/cobertura.xml &&
+            cp -R lib/ src && \
+            cp -R coverage .reports"
+
+  build:application:
+    desc: "Roda o comando de build da aplicação"
+    cmds:
+      - >
+        docker-compose run \
+          {{.DOCKER_IMAGE_BUILDER}} sh -c "\
+            git config --global --add safe.directory /home/flutter && \
+            flutter build web --profile --dart-define=env={{.ENV}} --dart-define=SECRETS='{{.SECRETS}}' && \
+            mkdir -p artifacts/ && \
+            mv build/web/* artifacts/"
+      - sudo chmod 777 -R artifacts
+
+  get:application-version:
+    desc: "Retorna do pubspec.yaml a versão do projeto"
+    cmds:
+      - docker run --rm --log-driver none --entrypoint yq -v $(pwd):/tmp/ linuxserver/yq -r '.version' /tmp/pubspec.yaml
+
+  get:application-name:
+    desc: "Retorna do pubspec.yaml o nome do projeto"
+    cmds:
+      - docker run --rm --log-driver none --entrypoint yq -v $(pwd):/tmp/ linuxserver/yq -r '.name' /tmp/pubspec.yaml
+
+  get:publish-test-result-format:
+    desc: "Retorna o formato dos testes"
+    cmds:
+      - echo "JUnit"
+
+  get:publish-test-result-files:
+    desc: "Retorna o local do arquivo de resultados dos testes"
+    cmds:
+      - echo ".reports/test-report.xml"
+
+  get:publish-test-html-report:
+    desc: "Retorna o local do arquivo html de resultados dos testes"
+    cmds:
+      - echo ".reports/coverage/index.html"
+
+  get:publish-test-coverage-tool:
+    desc: "Retorna o modelo de cobertura"
+    cmds:
+      - echo "Cobertura"
+
+  get:publish-test-coverage-summary-file:
+    desc: "Retorna o modelo de cobertura"
+    cmds:
+      - echo ".reports/coverage/cobertura.xml"
+
+  get:publish-test-coverage-path-to-sources:
+    desc: "Retorna o local para a analise do sonar"
+    cmds:
+      - echo "src"
+
+  get:publish-artifact-path:
+    desc: "Retorna a pasta de destino dos builds"
+    cmds:
+      - echo "artifacts"
