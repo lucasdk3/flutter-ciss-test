@@ -7,16 +7,9 @@ abstract class TodosEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAllTodosEvent extends TodosEvent {}
+class GetAllTodosEvent extends TodosEvent {
+  final FilterTodos filter;
 
-class GetTodosEvent {
-  final int id;
-
-  GetTodosEvent({required this.id});
+  const GetAllTodosEvent({required this.filter});
 }
 
-class DeleteTodosEvent extends TodosEvent {
-  final int id;
-
-  DeleteTodosEvent({required this.id});
-}

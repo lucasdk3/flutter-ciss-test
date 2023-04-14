@@ -15,5 +15,6 @@ class AppBinds {
       getIt<IConfigsService>(),
       getIt<IStorageService>(),
     ));
+    TodoBinds.call(getIt: getIt);
   }
 }

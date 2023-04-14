@@ -18,9 +18,9 @@ class TodoRepositoryImpl extends ITodoRepository {
   }
 
   @override
-  Future<Either<Failure, List<TodoEntity>>> getAll() async {
+  Future<Either<Failure, List<TodoEntity>>> getAll({required FilterTodos filterTodos}) async {
     try {
-      final result = await _datasource.getAll();
+      final result = await _datasource.getAll(filterTodos:filterTodos);
       final todos = List<TodoEntity>.from(result.map((todo) => todo.toEntity));
       return right(todos);
     } on Failure catch (e) {
@@ -43,7 +43,7 @@ class TodoRepositoryImpl extends ITodoRepository {
   Future<Either<Failure, TodoEntity>> update(
       {required TodoEntity todoEntity}) async {
     try {
-      final result = await _datasource.insert(todoModel: todoEntity.toModel);
+      final result = await _datasource.update(todoModel: todoEntity.toModel);
       return right(result.toEntity);
     } on Failure catch (e) {
       return left(e);

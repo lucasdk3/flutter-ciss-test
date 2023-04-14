@@ -1,4 +1,4 @@
-// ignore: avoid_web_libraries_in_flutter
+// coverage:ignore-file
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

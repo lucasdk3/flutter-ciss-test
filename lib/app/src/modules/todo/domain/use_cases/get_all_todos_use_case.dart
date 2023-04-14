@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../../../../ciss_test_exports.dart';
 
 abstract class IGetAllTodosUseCase {
-  Future<Either<Failure, List<TodoEntity>>> call();
+  Future<Either<Failure, List<TodoEntity>>> call({required FilterTodos filterTodos});
 }
 
 class GetAllTodosUseCaseImpl extends IGetAllTodosUseCase {
@@ -12,6 +12,6 @@ class GetAllTodosUseCaseImpl extends IGetAllTodosUseCase {
 
   GetAllTodosUseCaseImpl(this._repository);
   @override
-  Future<Either<Failure, List<TodoEntity>>> call() async =>
-      await _repository.getAll();
+  Future<Either<Failure, List<TodoEntity>>> call({required FilterTodos filterTodos}) async =>
+      await _repository.getAll(filterTodos:filterTodos);
 }

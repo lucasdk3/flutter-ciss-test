@@ -17,8 +17,9 @@ class TodoDatasourceImpl extends ITodoDatasource {
   }
 
   @override
-  Future<List<TodoModel>> getAll() async {
-    final response = await _api.get(apiRequest: TodoRequests.getAll());
+  Future<List<TodoModel>> getAll({required FilterTodos filterTodos}) async {
+    final response = await _api.get(
+        apiRequest: TodoRequests.getAll(filterTodos: filterTodos));
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ErrorResponse.fromResponse(response);
     } else {
@@ -36,18 +37,20 @@ class TodoDatasourceImpl extends ITodoDatasource {
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ErrorResponse.fromResponse(response);
     } else {
-      final body = response.body as Map<String, dynamic>;
-      final find = TodoModel.fromJson(body);
+      final body = response.body as List;
+      final find = TodoModel.fromJson(body.first);
       return find;
     }
   }
 
   @override
   Future<TodoModel> update({required TodoModel todoModel}) async {
-    final response = await _api.put(
-        apiRequest: TodoRequests.insert(data: todoModel.toJson()));
+    final response = await _api.patch(
+        apiRequest: TodoRequests.update(data: todoModel.toJson()));
     if (response.statusCode != 200 && response.statusCode != 201) {
-      throw ErrorResponse.fromResponse(response);
+      throw ErrorResponse(
+          statusCode: (response.statusCode ?? 404).toString(),
+          message: response.errorBody ?? ConstantsStrings.error404);
     } else {
       final body = response.body as Map<String, dynamic>;
       final find = TodoModel.fromJson(body);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import '../ciss_test_exports.dart';
 
 class App extends StatelessWidget {
@@ -7,9 +6,8 @@ class App extends StatelessWidget {
   const App({Key? key, required this.env}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final getIt = GetIt.I;
-    AppBinds.call(getIt: getIt, env: env);
-    final routes = AppRoutes.routes(getIt);
+
+    final routes = AppRoutes.routes();
 
     return MaterialApp.router(
       routeInformationParser: routes.routeInformationParser,

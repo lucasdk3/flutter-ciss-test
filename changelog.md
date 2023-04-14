@@ -1,8 +1,8 @@
-## [0.0.1] - 10/04/2023
+## [1.0.0] - 13/04/2023
 
-### Added
+### Epic
 
-- Start project
+- Finalizado telas do projeto
 
 ## [0.4.1] - 10/04/2023
 
@@ -12,3 +12,9 @@
 - Complete clean of module todo
 - First test with TodoEntity
 - Environments 
+
+## [0.0.1] - 10/04/2023
+
+### Added
+
+- Start project

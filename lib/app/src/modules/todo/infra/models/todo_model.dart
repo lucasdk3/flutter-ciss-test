@@ -3,7 +3,7 @@ import '../../../../../../../ciss_test_exports.dart';
 class TodoModel extends TodoEntity {
   const TodoModel(
       {required super.userId,
-      required super.id,
+      super.id,
       required super.title,
       required super.completed});
 
@@ -18,8 +18,8 @@ class TodoModel extends TodoEntity {
   List<Object?> get props => [userId, id, completed, title];
 
   Map<String, dynamic> toJson() => {
+        if (id != null) "id": id,
         "userId": userId ?? 0,
-        "id": id ?? 0,
         "title": title ?? '',
         "completed": completed ?? false,
       };
@@ -31,7 +31,7 @@ class TodoModel extends TodoEntity {
 extension TodoEntityToModel on TodoEntity {
   TodoModel get toModel => TodoModel(
       userId: userId ?? 0,
-      id: id ?? 0,
+      id: id,
       title: title ?? '',
       completed: completed ?? false);
 }
@@ -39,7 +39,7 @@ extension TodoEntityToModel on TodoEntity {
 extension TodoModelToEntity on TodoModel {
   TodoEntity get toEntity => TodoEntity(
       userId: userId ?? 0,
-      id: id ?? 0,
+      id: id ,
       title: title ?? '',
       completed: completed ?? false);
 }
