@@ -1,3 +1,9 @@
+## [2.0.2] - 16/04/2023
+
+### Fix
+
+- Ajustado layout da página de uma tarefa
+
 ## [2.0.1] - 16/04/2023
 
 ### Fix

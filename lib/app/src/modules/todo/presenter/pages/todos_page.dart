@@ -20,7 +20,7 @@ class TodosPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: SizedBox(
-          height: context.height * 1,
+          height: context.height,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -48,7 +48,8 @@ class TodosPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/${ConstantsRoutes.todo}?isEdit=false'),
+        onPressed: () => context.push(
+            '${ConstantsRoutes.todos}/${ConstantsRoutes.todo}?isEdit=false'),
         backgroundColor: ThemeService.colors.white,
         child: Icon(Icons.add, size: 24, color: ThemeService.colors.primary),
       ),
