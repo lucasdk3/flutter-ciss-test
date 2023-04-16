@@ -1,0 +1,119 @@
+version: "3"
+
+vars:
+  DOCKER_IMAGE_BUILDER: builder
+dotenv: [".env"]
+
+tasks:
+  default:
+    cmds:
+      - task --help
+      - task --list
+
+  compose:up:
+    desc: "Cria as imagens do flutter e do sonar"
+    cmds:
+      - docker compose up -d
+
+  install:dependencies:local:
+    desc: "Instala as dependências da aplicação"
+    cmds:
+      - rm -rf pubspec.lock && flutter clean && flutter pub get
+
+  install:dependencies:
+    desc: "Instala as dependências da aplicação"
+    cmds:
+      - >
+        docker-compose run \
+          {{.DOCKER_IMAGE_BUILDER}} sh -c "\
+          git config --global --add safe.directory /home/flutter && \
+          rm -rf pubspec.lock && \
+           flutter clean && \
+           flutter pub get"
+
+  review:lint:local:
+    desc: "Executa as rotinas de lint da aplicação"
+    cmds:
+      - flutter analyze --no-fatal-infos
+
+  review:lint:
+    desc: "Executa as rotinas de lint da aplicação"
+    cmds:
+      - >
+        docker-compose run \
+          {{.DOCKER_IMAGE_BUILDER}} sh -c "\
+          git config --global --add safe.directory /home/flutter && \
+          flutter analyze --no-fatal-infos"
+
+  review:test:local:
+    desc: "Executa as rotinas de test da aplicação"
+    cmds:
+      - >
+        rm -rf .reports && \
+          mkdir -p .reports && \
+          flutter test --coverage && \
+          mv coverage .reports/coverage && \
+          genhtml -o .reports/coverage .reports/coverage/lcov.info
+
+  review:test:
+    desc: "Executa as rotinas de test da aplicação"
+    cmds:
+      - >
+        docker-compose run \
+          {{.DOCKER_IMAGE_BUILDER}} sh -c "\   
+            git config --global --add safe.directory /home/flutter && \
+            rm -rf .reports && \
+            mkdir -p .reports && \
+            flutter test --coverage && \
+            mv coverage .reports/coverage && \
+            genhtml -o .reports/coverage .reports/coverage/lcov.info"
+
+  build:application:
+    desc: "Roda o comando de build da aplicação"
+    cmds:
+      - >
+        docker-compose run \
+          {{.DOCKER_IMAGE_BUILDER}} sh -c "\
+            git config --global --add safe.directory /home/flutter && \
+            flutter build apk --release \
+              -t lib/main_{{.ENV}}.dart \
+              --dart-define=env={{.ENV}} && \
+            mkdir -p artifacts && \
+            mv build/app/outputs/flutter-apk/app-{{.ENV}}-release.apk artifacts"
+
+  build:application:local:
+    desc: "Roda o comando de build da aplicação"
+    cmds:
+      - >
+        flutter build apk --release \
+          -t lib/main_{{.ENV}}.dart \
+          --flavor {{.ENV}} \
+          --dart-define=env={{.ENV}}
+      - >
+        mkdir -p artifacts && \
+          mv build/app/outputs/flutter-apk/app-{{.ENV}}-release.apk artifacts
+
+  get:application-version:
+    desc: "Retorna do pubspec.yaml a versão do projeto"
+    cmds:
+      - docker run --rm --log-driver none --entrypoint yq -v $(pwd):/tmp/ linuxserver/yq -r '.version' /tmp/pubspec.yaml
+
+  get:application-name:
+    desc: "Retorna do pubspec.yaml o nome do projeto"
+    cmds:
+      - docker run --rm --log-driver none --entrypoint yq -v $(pwd):/tmp/ linuxserver/yq -r '.name' /tmp/pubspec.yaml
+
+  get:publish-test-html-report:
+    desc: "Retorna o local do arquivo html de resultados dos testes"
+    cmds:
+      - echo ".reports/coverage/index.html"
+
+  get:publish-test-coverage-tool:
+    desc: "Retorna o modelo de cobertura"
+    cmds:
+      - echo "Cobertura"
+
+  get:publish-artifact-path:
+    desc: "Retorna a pasta de destino dos builds"
+    cmds:
+      - echo "artifacts"
