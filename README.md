@@ -15,7 +15,7 @@ Para rodar o projeto localmente é necessário ter o flutter instalado em sua m�
 
 Utilizando o vscode podemos utilizar os ambientes criados no nosso arquivo .vscode/launch.json, sendo assim, utilizando a aba de debug, conforme o print abaixo, rodamos o projeto no ambiente de desenvolvimento, podemos escolher também o ambiente de homologação e produção, a escolha do ambiente acarreta na utilização das configurações corretas de ambiente, como o end point utilizado.
 
-![Run Project](assets/images/run_project.jpeg)
+![Run Project](assets/images/run_project.png)
 
 ## Use Docker
 
