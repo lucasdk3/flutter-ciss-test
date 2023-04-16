@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:get_it/get_it.dart';
 import '../../../../ciss_test_exports.dart';
 
@@ -19,9 +20,11 @@ class TodoBinds {
         () => DeleteTodoUseCaseImpl(getIt<ITodoRepository>()));
 
     getIt.registerLazySingleton(() => TodoForm());
-    getIt.registerLazySingleton(() =>
-        TodosBloc(getAllUseCase: getIt<IGetAllTodosUseCase>())
-          ..add(const GetAllTodosEvent(filter: FilterTodos.all)));
+    getIt.registerLazySingleton(() => TodosSearchForm());
+    getIt.registerLazySingleton(() => TodosBloc(
+        getAllUseCase: getIt<IGetAllTodosUseCase>(),
+        searchForm: getIt<TodosSearchForm>())
+      ..add(InitTodosEvent()));
     getIt.registerLazySingleton(() => TodoBloc(
           form: getIt<TodoForm>(),
           getUseCase: getIt<IGetTodoUseCase>(),

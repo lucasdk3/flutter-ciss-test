@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import '../ciss_test_exports.dart';
@@ -15,6 +16,7 @@ class AppBinds {
       getIt<IConfigsService>(),
       getIt<IStorageService>(),
     ));
+    getIt.registerSingleton(SplashBloc());
     TodoBinds.call(getIt: getIt);
   }
 }

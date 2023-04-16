@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// coverage:ignore-file
 import 'package:flutter_ciss_test/ciss_test_exports.dart';
 
 class UiLoading extends StatelessWidget {

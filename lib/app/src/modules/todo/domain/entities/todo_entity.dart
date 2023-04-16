@@ -10,7 +10,4 @@ class TodoEntity extends Equatable {
 
   @override
   List<Object?> get props => [userId, id, title, completed];
-
-  @override
-  bool? get stringify => true;
 }

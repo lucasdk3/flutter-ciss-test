@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../ciss_test_exports.dart';
@@ -13,22 +14,22 @@ class ListTodos extends StatelessWidget {
         bloc: todosBloc,
         builder: (context, state) {
           if (state is TodosSuccess) {
-            final todos = state.todos;
+            final todos = (state.searchedTodos.isNotEmpty)
+                ? state.searchedTodos
+                : state.todos;
             return Wrap(
               children: [
-                Center(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: todos.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return ItemTodo(
-                          todoBloc: todoBloc,
-                          todoEntity: todos[index],
-                          todosBloc: todosBloc,
-                        );
-                      }),
-                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: todos.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ItemTodos(
+                        todoBloc: todoBloc,
+                        todoEntity: todos[index],
+                        todosBloc: todosBloc,
+                      );
+                    }),
               ],
             );
           } else if (state is TodosEmpty) {

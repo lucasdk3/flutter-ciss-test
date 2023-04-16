@@ -22,12 +22,4 @@ class ApiResponse<T> {
   final dynamic errorBody;
 
   final String? token;
-
-  int get status => statusCode ?? 500;
-
-  bool get isOk => status.clamp(200, 299) == status;
-
-  bool get hasError => !isOk;
-
-  bool get unauthorized => status == 401;
 }

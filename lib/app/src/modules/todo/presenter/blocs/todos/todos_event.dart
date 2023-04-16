@@ -1,11 +1,10 @@
 part of 'todos_bloc.dart';
 
-abstract class TodosEvent extends Equatable {
+abstract class TodosEvent {
   const TodosEvent();
-
-  @override
-  List<Object> get props => [];
 }
+
+class InitTodosEvent extends TodosEvent {}
 
 class GetAllTodosEvent extends TodosEvent {
   final FilterTodos filter;
@@ -13,3 +12,8 @@ class GetAllTodosEvent extends TodosEvent {
   const GetAllTodosEvent({required this.filter});
 }
 
+class SearchTodosEvent extends TodosEvent {
+  final String searchValue;
+
+  const SearchTodosEvent({required this.searchValue});
+}

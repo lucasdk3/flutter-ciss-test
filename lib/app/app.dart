@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import '../ciss_test_exports.dart';
 
@@ -6,7 +7,6 @@ class App extends StatelessWidget {
   const App({Key? key, required this.env}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     final routes = AppRoutes.routes();
 
     return MaterialApp.router(

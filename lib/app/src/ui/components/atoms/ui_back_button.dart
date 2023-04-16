@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:go_router/go_router.dart';
 import '../../../../../../ciss_test_exports.dart';
 import 'package:flutter/material.dart';

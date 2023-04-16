@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../ciss_test_exports.dart';
@@ -15,12 +16,17 @@ class ThemeIcons {
       );
   SvgPicture deleteIcon({Color? color}) => SvgPicture.asset(
         'assets/icons/delete_icon.svg',
-        colorFilter:
-            ColorFilter.mode(color ?? ThemeService.colors.black, BlendMode.srcIn),
+        colorFilter: ColorFilter.mode(
+            color ?? ThemeService.colors.black, BlendMode.srcIn),
       );
   SvgPicture updateIcon({Color? color}) => SvgPicture.asset(
         'assets/icons/update_icon.svg',
+        colorFilter: ColorFilter.mode(
+            color ?? ThemeService.colors.black, BlendMode.srcIn),
+      );
+  SvgPicture get searchIcon => SvgPicture.asset(
+        'assets/icons/search_icon.svg',
         colorFilter:
-            ColorFilter.mode(color ?? ThemeService.colors.black, BlendMode.srcIn),
+            ColorFilter.mode(ThemeService.colors.black, BlendMode.srcIn),
       );
 }

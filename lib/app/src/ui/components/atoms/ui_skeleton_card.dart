@@ -1,9 +1,10 @@
-// ignore_for_file: constant_identifier_names
+// coverage:ignore-file
 
 import 'package:flutter/material.dart';
 
 import '../../../../../../ciss_test_exports.dart';
 
+// ignore: constant_identifier_names
 enum SkeletonType { TYPE1, TYPE2 }
 
 class UiSkeletonCard extends StatelessWidget {

@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   const todo1 = TodoEntity(userId: 1, id: 1, title: 'test', completed: false);
   const todo2 = TodoEntity(userId: 1, id: 1, title: 'test', completed: false);
-  const todo3 = TodoEntity(userId: 1, id: 2, title: 'test', completed: false);
+  const todo3 = TodoEntity(userId: 1, id: 3, title: 'test', completed: false);
 
   group('TodoEntity', () {
     test('dois objetos iguais devem ter o mesmo hashCode', () {

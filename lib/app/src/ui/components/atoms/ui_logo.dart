@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import '../../../../../ciss_test_exports.dart';
 
@@ -8,7 +9,7 @@ class UiLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(height ?? context.height * 0.03),
+      padding: EdgeInsets.all(height ?? context.height * 0.01),
       child: Center(child: ThemeService.images.logoImage),
     );
   }

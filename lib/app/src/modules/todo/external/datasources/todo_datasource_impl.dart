@@ -8,7 +8,9 @@ class TodoDatasourceImpl extends ITodoDatasource {
   Future<TodoModel> get({required int id}) async {
     final response = await _api.get(apiRequest: TodoRequests.get(id: id));
     if (response.statusCode != 200 && response.statusCode != 201) {
-      throw ErrorResponse.fromResponse(response);
+      throw ErrorResponse(
+          statusCode: (response.statusCode ?? 404).toString(),
+          message: response.errorBody?['message'] ?? ConstantsStrings.error404);
     } else {
       final body = response.body as Map<String, dynamic>;
       final find = TodoModel.fromJson(body);
@@ -21,7 +23,9 @@ class TodoDatasourceImpl extends ITodoDatasource {
     final response = await _api.get(
         apiRequest: TodoRequests.getAll(filterTodos: filterTodos));
     if (response.statusCode != 200 && response.statusCode != 201) {
-      throw ErrorResponse.fromResponse(response);
+      throw ErrorResponse(
+          statusCode: (response.statusCode ?? 404).toString(),
+          message: response.errorBody?['message'] ?? ConstantsStrings.error404);
     } else {
       final body = response.body as List;
       final todos = List<TodoModel>.from(
@@ -32,10 +36,12 @@ class TodoDatasourceImpl extends ITodoDatasource {
 
   @override
   Future<TodoModel> insert({required TodoModel todoModel}) async {
-    final response = await _api.get(
+    final response = await _api.post(
         apiRequest: TodoRequests.insert(data: todoModel.toJson()));
     if (response.statusCode != 200 && response.statusCode != 201) {
-      throw ErrorResponse.fromResponse(response);
+      throw ErrorResponse(
+          statusCode: (response.statusCode ?? 404).toString(),
+          message: response.errorBody?['message'] ?? ConstantsStrings.error404);
     } else {
       final body = response.body as List;
       final find = TodoModel.fromJson(body.first);
@@ -50,7 +56,7 @@ class TodoDatasourceImpl extends ITodoDatasource {
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ErrorResponse(
           statusCode: (response.statusCode ?? 404).toString(),
-          message: response.errorBody ?? ConstantsStrings.error404);
+          message: response.errorBody?['message'] ?? ConstantsStrings.error404);
     } else {
       final body = response.body as Map<String, dynamic>;
       final find = TodoModel.fromJson(body);
@@ -62,7 +68,9 @@ class TodoDatasourceImpl extends ITodoDatasource {
   Future<SuccessResponse> delete({required int id}) async {
     final response = await _api.delete(apiRequest: TodoRequests.delete(id: id));
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw ErrorResponse.fromResponse(response);
+      throw ErrorResponse(
+          statusCode: (response.statusCode ?? 404).toString(),
+          message: response.errorBody?['message'] ?? ConstantsStrings.error404);
     } else {
       return SuccessResponse(value: "Deletado item com sucesso");
     }

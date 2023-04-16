@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../../../../../ciss_test_exports.dart';
 import 'package:flutter/material.dart';

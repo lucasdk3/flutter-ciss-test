@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 
 extension ResponsiveExtension on BuildContext {

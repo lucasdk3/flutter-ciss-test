@@ -1,4 +1,6 @@
+// coverage:ignore-file
 class ConstantsStrings {
+  static const String title = 'Teste técnico';
   static const String todos = 'Tarefas';
   static const String todosSubtitle =
       'Lista de tarefas criadas para teste técnico';

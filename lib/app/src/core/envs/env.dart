@@ -16,8 +16,9 @@ class EnvironmentServer implements IEnvironmentService {
       'prod': Environment.prod
     };
 
-    return EnvironmentServer(map[const String.fromEnvironment('env', defaultValue: 'dev')] ??
-        Environment.qa);
+    return EnvironmentServer(
+        map[const String.fromEnvironment('env', defaultValue: 'dev')] ??
+            Environment.dev);
   }
 
   @override

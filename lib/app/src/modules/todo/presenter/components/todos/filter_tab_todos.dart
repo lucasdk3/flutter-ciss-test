@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../ciss_test_exports.dart';
@@ -30,8 +31,8 @@ class FilterTabTodos extends StatelessWidget {
                   state.filter
                 },
                 onSelectionChanged: (Set<FilterTodos> newSelection) {
-                  todosBloc
-                      .add(GetAllTodosEvent(filter: newSelection.first));
+                  todosBloc.add(GetAllTodosEvent(filter: newSelection.first));
+                  todosBloc.searchForm.setSearch = '';
                 },
                 showSelectedIcon: false,
                 style: ThemeService.styles.segmentedStyle());

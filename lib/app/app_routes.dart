@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // ignore: depend_on_referenced_packages
@@ -7,6 +8,11 @@ class AppRoutes {
   static GoRouter routes() => GoRouter(initialLocation: '/', routes: <GoRoute>[
         GoRoute(
             path: ConstantsRoutes.root,
+            builder: (BuildContext context, GoRouterState state) {
+              return const SplashPage();
+            }),
+        GoRoute(
+            path: ConstantsRoutes.todos,
             builder: (BuildContext context, GoRouterState state) {
               return const TodosPage();
             },

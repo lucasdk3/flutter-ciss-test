@@ -6,4 +6,5 @@ class ConstantsLabels {
   static const String completed = 'Você já completou a sua tarefa?';
   static const String save = 'Salvar';
   static const String delete = 'Excluir';
+  static const String search = 'Pesquisa sua tarefa';
 }

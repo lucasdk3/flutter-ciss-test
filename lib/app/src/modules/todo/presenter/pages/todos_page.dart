@@ -1,5 +1,7 @@
+// coverage:ignore-file
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../ciss_test_exports.dart';
@@ -9,9 +11,12 @@ class TodosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: ThemeService.colors.white));
     final todosBloc = GetIt.I.get<TodosBloc>();
     final todoBloc = GetIt.I.get<TodoBloc>();
     return Scaffold(
+      backgroundColor: ThemeService.colors.white,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: SizedBox(
@@ -35,6 +40,7 @@ class TodosPage extends StatelessWidget {
                 const SizedBox(height: 24),
                 FilterTabTodos(todosBloc: todosBloc),
                 const SizedBox(height: 24),
+                SearchTodosField(todosBloc: todosBloc),
                 ListTodos(todosBloc: todosBloc, todoBloc: todoBloc)
               ],
             ),

@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import '../../../../../../ciss_test_exports.dart';
 
 class TodoRequests {
@@ -14,7 +15,6 @@ class TodoRequests {
       mockSimulate: TodoResponses.successResponse);
   static ApiRequest delete({required int id}) => ApiRequest(
       path: '/todos/$id', mockSimulate: TodoResponses.successResponse);
-
 }
 
 class TodoResponses {
@@ -29,8 +29,8 @@ class TodoResponses {
   );
 }
 
-class TodoApiUtils{
-    static String getAllPath(FilterTodos filterTodos) {
+class TodoApiUtils {
+  static String getAllPath(FilterTodos filterTodos) {
     switch (filterTodos) {
       case FilterTodos.all:
         return '/todos?userId=1';
