@@ -9,7 +9,7 @@ class UiBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: () => context.pop(), icon: ThemeService.icons.backIcon);
+    return InkWell(
+        onTap: () => context.pop(), child: ThemeService.icons.backIcon);
   }
 }

@@ -34,18 +34,18 @@ class _TodoPageState extends State<TodoPage> {
     final todosBloc = GetIt.I.get<TodosBloc>();
     return Scaffold(
       backgroundColor: ThemeService.colors.white,
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: SizedBox(
           height: context.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Row(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 24),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -54,46 +54,41 @@ class _TodoPageState extends State<TodoPage> {
                       ConstantsStrings.todo,
                       style: ThemeService.styles.ralewayTitle(),
                     ),
-                    const SizedBox(width: 40),
+                    const SizedBox(height: 40),
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
-                child: Column(
+                const SizedBox(height: 24),
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: AutoSizeText(
-                            ConstantsStrings.todosSubtitle,
-                            style: ThemeService.styles.ralewaySubtitle(),
-                          ),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: AutoSizeText(
+                        ConstantsStrings.todoSubtitle(widget.isEdit),
+                        style: ThemeService.styles.ralewaySubtitle(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 32),
+                FormsTodos(todoBloc: todoBloc),
+                const SizedBox(height: 32),
+                Column(
+                  children: [
+                    SubmitTodoButton(
+                      isEdit: widget.isEdit,
+                      todoBloc: todoBloc,
+                      todosBloc: todosBloc,
                     ),
                     const SizedBox(height: 24),
-                    FormsTodos(todoBloc: todoBloc),
-                    Column(
-                      children: [
-                        SubmitTodoButton(
-                          isEdit: widget.isEdit,
-                          todoBloc: todoBloc,
-                          todosBloc: todosBloc,
-                        ),
-                        const SizedBox(height: 24),
-                        DeleteTodoButton(
-                          todoEntity: widget.todoEntity,
-                          todoBloc: todoBloc,
-                          todosBloc: todosBloc,
-                        ),
-                      ],
+                    DeleteTodoButton(
+                      todoEntity: widget.todoEntity,
+                      todoBloc: todoBloc,
+                      todosBloc: todosBloc,
                     ),
                   ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
