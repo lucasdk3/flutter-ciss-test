@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Quality",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-t",
+                "lib/main_qa.dart",
+                "--flavor",
+                "qa",
+                "--dart-define=env=qa"
+            ]
+        },
+        {
+            "name": "Production",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-t",
+                "lib/main_prod.dart",
+                "--flavor",
+                "prod",
+                "--dart-define=env=prod"
+            ],
+            "flutterMode": "release"
+        },
+        {
+            "name": "Development",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-t",
+                "lib/main_dev.dart",
+                "--flavor",
+                "dev",
+                "--dart-define=env=dev"
+            ],
+            "flutterMode": "debug"
+        }
+    ]
+}

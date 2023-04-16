@@ -1,0 +1,23 @@
+version: "3.3"
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: ci/build.Dockerfile
+    user: "root:root"
+    working_dir: /app
+    volumes:
+      - $PWD/:/app
+      - /tmp:/.cache
+      - pub-cache:/home/.pub-cache
+      - flutter:/home/flutter
+    container_name: builder
+    logging:
+      driver: none
+    network_mode: host
+
+volumes:
+  pub-cache:
+    external: false
+  flutter:
+    external: false
